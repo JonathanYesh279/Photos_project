@@ -1,0 +1,153 @@
+* {
+  box-sizing: border-box;
+  text-decoration: none;
+  margin: 0;
+  list-style: none;
+  font-size: 15px;
+  font-family: "Mukta", sans-serif;
+}
+
+body {
+  background-image: url(./Camera.jpg);
+  background-size: 1550px 750px;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 70px;
+  color: #fff;
+}
+
+.logo {
+  padding-left: 20px;
+}
+
+ul {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.list-items {
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.list-items:hover {
+  border-bottom: 2px solid #fff;
+}
+
+#search {
+  width: 70%;
+  height: 25px;
+  border-radius: 20px;
+  border: none;
+}
+
+#search:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+#search:hover {
+  background-color: #f8e6e6;
+}
+
+.btn-search {
+  background: none;
+  color: #fff;
+  border: none;
+}
+
+.btn-memory {
+  padding: 10px 20px;
+  background-color: #333;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.btn-submit {
+  background-color: #f1f1f1;
+  color: #333;
+  width: 200px;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-family: "Protest Riot", sans-serif;
+  cursor: pointer;
+}
+
+.btn-choose-file {
+  width: 230px;
+  border-radius: 5px;
+  background: none;
+  color: #fff;
+  cursor: pointer;
+  font-family: "Protest Riot", sans-serif;
+}
+
+.image-ready {
+  display: none;
+  background-color: #fff;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-family:"Protest Riot", sans-serif;
+  cursor: pointer;
+}
+
+.btn-search:hover {
+  cursor: pointer;
+}
+
+.btn-memory:hover {
+  background-color: #f1f1f1;
+  color: #333;
+}
+
+.btn-submit:hover {
+  background-color: #2333;
+  color: #f1f1f1;
+}
+
+.file-error-message {
+  display: none;
+  color: red;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  margin-top: 50px;
+  font-size: 3rem;
+  color: #fff;
+  font-family: "Protest Riot", sans-serif;
+}
+
+h4 {
+  margin: 20px;
+  font-size: 2rem;
+  color: #fff;
+  font-weight: 300;
+  font-family: "Protest Riot", sans-serif;
+}
+
+.upload-container {
+  display: flex;
+  align-items: center;
+}
+
+.image-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height:500px;
+}
