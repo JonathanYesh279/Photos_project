@@ -16,26 +16,38 @@ const upload = multer({ storage: storage });
 
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
+app.use('/uploads', express.static('uploads'));
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname + '/public/index.html'));
 });
 
-app.post("/upload", upload.single("image"), async (req, res) => {
+app.post('/upload', upload.array('image', 10), async (req, res) => {
   console.log('Upload route handler called.');
-   
+
   try {
-    
     const bucket = admin.storage().bucket();
-    const imageBuffer = req.file.buffer;
-    const imageName = "image1.png";//req.file.originalname;
-    const file = bucket.file(imageName);
-    const result = await file.save(imageBuffer, { contentType: "image/png" });
-    console.log("Image uploaded successfully:", result);
-    res.redirect("/my_photos.html");
+
+    // Iterrrate over each uploaded file
+    for (const file of req.files) {
+      const imageBuffer = file.buffer;
+      const imageName = file.originalname;
+      const cloudFile = bucket.file(imageName);
+
+      await cloudFile.save(imageBuffer, { contentType: 'image/png' });
+
+      const [exists] = await cloudFile.exists();
+      if (exists) {
+        console.log('Image uploaded successfully', imageName);
+        // Redirect to my_photos.html after successful upload
+      } else {
+        console.log('Image upload failed', imageName);
+      }
+    }
+    res.redirect('/my_photos.html');
   } catch (error) {
-    console.error("Error uploading image:", error);
-    res.status(500).send("Please choose a file.");
+    console.error('Error uploading image:', error);
+    res.status(500).send('Please choose a file.');
   }
 });
 
@@ -44,16 +56,16 @@ app.get('/images', async (req, res) => {
   try {
     const bucket = admin.storage().bucket();
     const [files] = await bucket.getFiles();
-    const imageUrls = files.map((file) => {
+    const imageUrls = await Promise.all(files.map(async (file) => {
       const [_, imageName] = file.name.split('/');
-      return bucket
+      const signedUrls = await bucket 
         .file(file.name)
         .getSignedUrl({
           action: 'read',
-          expires: '03-09-2023', 
+          expires: '03-09-2025', 
         })
-        .then((signedUrls) => signedUrls[0]);
-    });
+      return signedUrls[0];
+    }));
     const imagesHtml = imageUrls.map((url) => `<img src="${url}" />`).join('');
     res.send(imagesHtml);
   } catch (error) {

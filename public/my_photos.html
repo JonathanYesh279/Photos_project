@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Photos</title>
-  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="./my_photos.css" />
   <link href="https://fonts.googleapis.com/css2?family=Protest+Riot&display=swap" rel="stylesheet"/>
   <script src="https://kit.fontawesome.com/fddc89b4d7.js" crossorigin="anonymous"></script>
 </head>
@@ -32,9 +32,25 @@
       <div class="hero">
         <h1>My Photos</h1> 
       </div>
-      <div class="image-container">
+      <div class="image-container" id="imageContainer">
+        <!-- Images will displayed here -->
       </div>
   </main>
+  <script src="./script.js"></script>
+  <script>  
+    // Function to fetch and display images
+    async function fetchAndDisplayImages() {
+      try {
+        const response = await fetch('/images');
+        const imagesHtml = await response.text();
+        document.getElementById('imageContainer').innerHTML = imagesHtml;
+      } catch (error) {
+        console.error('Error fetching images:', error);
+      }
+    }
+
+    // Call fetchAndDisplayImages() when the page loads
+    fetchAndDisplayImages();
+  </script>
 </body>
-<script src="./script.js"></script>
 </html>
